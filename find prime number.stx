@@ -1,0 +1,61 @@
+  一 子 乙甲子                  push +2;
+  一 甲 子                      printn;
+  一 子 乙甲乙甲子              push +10;
+  一 甲 丑                      printc;
+  一 子 甲乙子                  push -1;
+  一 子 乙乙子                  push +3;
+  一 丑 子                      save;
+  一 子 乙甲子                  push +2;
+  三 甲 丑 乙甲子               goto +2;
+
+三 甲 子 乙子               tag +1;#next_number
+  一 子 丑                      del;
+  一 子 甲乙子                  push -1;
+  一 丑 丑                      get;
+  一 子 乙子                    push +1;
+  二 甲 子                      +;
+  一 丑 乙子                    copy;
+  一 子 乙乙甲甲甲乙乙子        push +99;
+  一 子 子                      switch;
+  二 甲 丑                      -;
+  三 乙 丑 甲乙子               if<0 -1;#end
+  一 子 甲乙子                  push -1;
+  一 子 子                      switch;
+  一 丑 子                      save;
+  一 子 乙甲子                  push +2;
+  三 甲 丑 乙甲子               goto +2;
+
+三 甲 子 乙甲子             tag +2;#func_chack(dic[-1]) 2@top
+  一 丑 乙子                    copy;
+  一 子 甲乙子                  push -1;
+  一 丑 丑                      get;
+  一 子 子                      switch;
+  三 子 子 甲子                 %;
+  三 乙 子 乙子                 if=0 +1;#not_prim->next_number
+  一 子 乙子                    push +1;
+  二 甲 子                      +;
+  一 丑 乙子                    copy;
+  一 子 甲乙子                  push -1;
+  一 丑 丑                      get;
+  二 甲 丑                      -;
+  三 乙 丑 乙甲子               if<0 +2;#next
+  三 甲 丑 乙乙子               goto +3;#is_prim->print_prim
+
+三 甲 子 乙乙子             tag +3;#print_prim
+  一 子 甲乙子                  push -1;
+  一 丑 丑                      get;
+  一 甲 子                      printn;
+  一 子 乙甲乙甲子              push +10;
+  一 甲 丑                      printc;
+  三 甲 丑 乙子                 goto +1;#next_number
+
+三 甲 子 甲乙子             tag -1;#end
+  三 丑 丑                      end All;
+
+三 甲 子 甲子     # function star           >>[7,3]
+  一 丑 乙甲子    # Duplicate 2nd itn       >>[7,3,7]
+  一 丑 乙甲子    # Duplicate 2nd itn       >>[7,3,7,3]
+  二 子 子        # Floor Division          >>[7,3,2]
+  二 乙 子        # Multiplication          >>[7,6]
+  二 甲 丑        # Subtraction             >>[1]
+三 子 丑          # Function End            >>[1]
