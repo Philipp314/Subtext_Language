@@ -1,7 +1,6 @@
 # Project 《潛文 SubtextLang》 Specification
 
 ## Overview
-
 **SubtextLang** is an esoteric programming language inspired by the minimalist philosophy of languages like *Whitespace*. It operates exclusively with a set of seven carefully selected characters, which are grouped into three semantic categories. Despite this extreme constraint, SubtextLang enables the creation of well-structured and expressive programs, showcasing the creative potential of minimal syntax design.
 
 The language is available in two distinct versions:
@@ -46,8 +45,6 @@ Examples:
 - `一 子 乙甲乙子` → Push the value 5 onto the stack
 - `三 甲 子 乙乙甲乙子` → Define a label 13
 
----
-
 ## Data Encoding
 - Uses only `甲` and `乙`
 - `甲 = 0`, `乙 = 1`
@@ -61,8 +58,6 @@ Examples:
 | `乙甲子`              | 2 (binary 10)          |
 | `甲乙甲乙子`          | -5 (binary 101)        |
 | `乙乙甲乙子乙甲乙丑`  | 2.6 (binary 1101/101)  |
-
----
 
 ## Instruction Set
 
@@ -107,12 +102,8 @@ Examples:
 | `三 子 丑`         | return      | End of function     |
 | `三 丑 丑`         | end         | End program         |
 
----
-
 ## Comments and Ignored Characters
 - Any characters outside the seven allowed (`一`, `二`, `三`, `子`, `丑`, `甲`, `乙`) are ignored.
-
----
 
 ## Execution Model
 - Stack-based
@@ -122,8 +113,6 @@ Examples:
 ## Future Extensions
 - Reserve `一 一`, `一 二`, `三 三`, ... for future use
 - Support metadata or version headers (e.g. using leading comment)
-
----
 
 ## Sample Code
 ```
@@ -138,5 +127,3 @@ Take the remainder of the first two items in the stack
 ```
 
 (Coming soon)
-
-
