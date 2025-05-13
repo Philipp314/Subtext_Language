@@ -92,7 +92,7 @@ class Seven_charVM:
         if self.stack.pop() < 0:
           self.pc = self.labels[args[0]]
           continue
-      elif op == "return":
+      elif op == "funcEnd":
         self.pc = self.call_stack.pop()
         continue
       elif op == "end":
@@ -145,7 +145,7 @@ UnparamIns = {"一子子":"swap","一子丑":"drop","一丑子":"save","一丑�
               "一甲子":"printN","一甲丑":"printC","一乙子":"readN",
               "一乙丑":"readC","二甲子":"add","二甲丑":"sub","二乙子":"mul",
               "二乙丑":"div","二子子":"quot","二子丑":"and","二丑子":"or",
-              "二丑丑":"not","三子丑":"return","三丑丑":"end"}
+              "二丑丑":"not","三子丑":"funcEnd","三丑丑":"end"}
 ParamIns = {"三甲子":"label","三甲丑":"jump","三乙子":"ifz",
             "三乙丑":"ifl","三子子":"func","一子":"push","一丑":"copy"}
 codeTranslate=[]

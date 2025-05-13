@@ -99,7 +99,7 @@ Examples:
 | `三 乙 子[label]`  | ifz  LABEL  | Jump if top = 0     |
 | `三 乙 丑[label]`  | ifl  LABEL  | Jump if top < 0     |
 | `三 子 子[label]`  | func LABEL  | Call the function   |
-| `三 子 丑`         | return      | End of function     |
+| `三 子 丑`         | funcEnd     | End of function     |
 | `三 丑 丑`         | end         | End program         |
 
 ## Comments and Ignored Characters
