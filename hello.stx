@@ -1,0 +1,87 @@
+  一子 甲乙子          push -1;
+  一子 甲子            push 0;
+  一丑子               save;
+  一子 乙甲甲乙子      push 9;
+  一子 乙甲甲甲子      push 8;
+  二乙子               mul;    #72
+  三子子 乙子          func 1; #H
+  一子 乙乙子          push 3;
+  一子 乙甲乙甲子      push 10;
+  二乙子               mul;    #30
+  一子 乙子            push 1;
+  二甲丑               sub;    #29
+  二甲子               add;    #101
+  三子子 乙子          func 1; #e
+  一子 乙乙乙子        push 7;
+  二甲子               add;    #108
+  三子子 乙子          func 1; #l
+  三子子 乙子          func 1; #l
+  一子 乙乙子          push 3;
+  二甲子               add;    #111
+  三子子 乙子          func 1; #o
+  一子 乙甲乙甲子      push 10;
+  二子子               quot;   #11
+  一子 乙甲甲子        push 4;
+  二乙子               mul;    #44
+  三子子 乙子          func 1; #,
+  一子 乙乙甲甲子      push 12;
+  二甲丑               sub;    #32
+  三子子 乙子          func 1; # 
+  一子 乙乙子          push 3;
+  二乙子               mul;    #96
+  一子 乙甲甲乙子      push 9;
+  二甲丑               sub;    #87
+  三子子 乙子          func 1; #W
+  一子 乙乙甲子        push 6;
+  一子 乙甲甲子        push 4;
+  二乙子               mul;    #24
+  二甲子               add;    #111
+  三子子 乙子          func 1; #o
+  一子 乙乙子          push 3;
+  二甲子               add;    #114
+  三子子 乙子          func 1; #r
+  一子 乙乙甲子        push 6;
+  二甲丑               sub;    #108
+  三子子 乙子          func 1; #l
+  一子 乙甲甲甲子      push 8;
+  二甲丑               sub;    #100
+  三子子 乙子          func 1; #d
+  一子 乙乙子          push 3;
+  二子子               quot;   #33
+  三子子 乙子          func 1; #!
+  一子丑               drop;
+  一子 甲乙子          push -1;
+  一丑丑               get;
+  三甲丑 甲子          jump 0; #print
+                       
+三甲子 乙子            label 1;
+  一丑 乙子            copy 1;
+  一子 甲乙子          push -1;
+  一丑丑               get;
+  一子子               swap;
+  一丑子               save;
+  一子 甲乙子          push -1;
+  一丑丑               get;
+  一子 乙子            push 1;
+  二甲子               add;
+  一子 甲乙子          push -1;
+  一子子               swap;
+  一丑子               save;
+  三子丑               return;
+                       
+三甲子 甲子            label 0;
+  一丑 乙子            copy 1;
+  一子 甲乙子          push -1;
+  一丑丑               get;
+  一子子               swap;
+  二甲丑               sub;
+  一丑丑               get;
+  一甲丑               printC;
+  一子 乙子            push 1;
+  二甲丑               sub;
+  一丑 乙子            copy 1;
+  三乙子 甲乙子        ifz -1;
+  三甲丑 甲子          jump 0;
+                       
+三甲子 甲乙子          label -1;
+  三丑丑               end

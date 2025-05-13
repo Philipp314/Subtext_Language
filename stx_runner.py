@@ -162,4 +162,4 @@ for i in codeBeforPurification:
 
 vm = Seven_charVM(codeTranslate)
 vm.run()
-input("按 Enter 鍵結束...")
+input()
