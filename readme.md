@@ -61,7 +61,7 @@ Examples:
 
 ## Instruction Set
 
-### Memory Manipulation (`一 <Type B>`)
+### Memory Manipulation (`一 <Type A>`)
 | Code        | Operation   | Description            |
 |-------------|-------------|------------------------|
 | `一 子[n]`  | push VALUE  | Push number to stack   |
@@ -79,7 +79,7 @@ Examples:
 | `一 乙 子`  | readN     | Read number       |
 | `一 乙 丑`  | readC     | Read character    |
 
-### Arithmetic (`二 <Type C>`)
+### Arithmetic (`二`)
 | Code        | Operation | Description       |
 |-------------|-----------|-------------------|
 | `二 甲 子`  | add       | Addition          |
