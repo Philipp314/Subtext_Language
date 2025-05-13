@@ -32,7 +32,7 @@ These substitutions help maintain both the appearance and semantic neutrality of
 ### Characters Used
 
 | Category | Characters     | Description                             |
-|----------|----------------|-----------------------------------------|
+| -------- | -------------- | --------------------------------------- |
 | Type A   | `一` `二` `三` | Instruction type (stack, math, control) |
 | Type B   | `子` `丑`      | Sub-instruction modifier                |
 | Type C   | `甲` `乙`      | Data encoding                           |
@@ -54,7 +54,7 @@ Examples:
 
 ### Examples
 | Code                  | Meaning                |
-|-----------------------|------------------------|
+| --------------------- | ---------------------- |
 | `乙甲子`              | 2 (binary 10)          |
 | `甲乙甲乙子`          | -5 (binary 101)        |
 | `乙乙甲乙子乙甲乙丑`  | 2.6 (binary 1101/101)  |
@@ -63,7 +63,7 @@ Examples:
 
 ### Memory Manipulation (`一 <Type A>`)
 | Code        | Operation   | Description            |
-|-------------|-------------|------------------------|
+| ----------- | ----------- | ---------------------- |
 | `一 子[n]`  | push VALUE  | Push number to stack   |
 | `一 丑[n]`  | copy N      | Copy Nst of stack      |
 | `一 子 子`  | swap        | Swap top two items     |
@@ -73,7 +73,7 @@ Examples:
 
 ### I/O Operations (`一 <Type B>`)
 | Code        | Operation | Description       |
-|-------------|-----------|-------------------|
+| ----------- | --------- | ----------------- |
 | `一 甲 子`  | printN    | Output number     |
 | `一 甲 丑`  | printC    | Output character  |
 | `一 乙 子`  | readN     | Read number       |
@@ -81,7 +81,7 @@ Examples:
 
 ### Arithmetic (`二`)
 | Code        | Operation | Description       |
-|-------------|-----------|-------------------|
+| ----------- | --------- | ----------------- |
 | `二 甲 子`  | add       | Addition          |
 | `二 甲 丑`  | sub       | Subtraction       |
 | `二 乙 子`  | mul       | Multiplication    |
@@ -93,7 +93,7 @@ Examples:
 
 ### Flow Control (`三`)
 | Code               | Operation   | Description         |
-|--------------------|-------------|---------------------|
+| ------------------ | ----------- | ------------------- |
 | `三 甲 子[label]`  | label LABEL | Define a label      |
 | `三 甲 丑[label]`  | jump LABEL  | Unconditional jump  |
 | `三 乙 子[label]`  | ifz  LABEL  | Jump if top = 0     |
@@ -108,7 +108,7 @@ Examples:
 ## Execution Model
 - Stack-based
 - Optional labels for flow control
-- Values are binary literals encoded with 甲/乙 and terminated with `三`
+- Values are binary literals encoded with 甲/乙 and terminated with `子` or `丑`
 
 ## Future Extensions
 - Reserve `一 一`, `一 二`, `三 三`, ... for future use
@@ -117,13 +117,11 @@ Examples:
 ## Sample Code
 ```
 Take the remainder of the first two items in the stack
-三 甲 子 乙子   # function star        >>[7,3]
+三 甲 子 乙子     # function star      >>[7,3]
   一 丑 乙甲子    # Duplicate 2nd itn  >>[7,3,7]
   一 丑 乙甲子    # Duplicate 2nd itn  >>[7,3,7,3]
   二 子 子        # Floor Division     >>[7,3,2]
   二 乙 子        # Multiplication     >>[7,6]
   二 甲 丑        # Subtraction        >>[1]
-三 子 丑        # Function End         >>[1]
+三 子 丑          # Function End       >>[1]
 ```
-
-(Coming soon)
