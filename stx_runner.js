@@ -1,3 +1,11 @@
+function readInput(){
+  return prompt()*1;
+}
+
+function print(content){
+  console.log(content);
+}
+
 class Seven_charVM {
   constructor() {
     this.instruction=[];
@@ -6,7 +14,8 @@ class Seven_charVM {
     this.labels = {};
     this.call_stack = [];
     this.pc = 0;
-    this.InstDic=getInstDic();
+    this.InstDic=this.getInstDic();
+    this.pause=false;
   }
 
   // 建立指令映射dic
@@ -17,7 +26,7 @@ class Seven_charVM {
         push: (arg) => 
           {this.stack.push(arg);},
         copy: (arg) => 
-          {this.stack.push(this.stack[this.stack.length - 1 - arg]);},
+          {this.stack.push(this.stack[this.stack.length - arg]);},
         swap: () => {
           [this.stack[this.stack.length - 1], this.stack[this.stack.length - 2]] =
           [this.stack[this.stack.length - 2], this.stack[this.stack.length - 1]];},
@@ -68,20 +77,20 @@ class Seven_charVM {
       FlowControl:{
         label: () => {},
         func: (label) => {
-          this.callStack.push(this.pc + 1);
-          this.pc = this.labels[label];},
+          this.call_stack.push(this.pc + 1);
+          this.pc = this.labels[label]-1;},
         jump: (label) => 
-          {this.pc = this.labels[label];},
+          {this.pc = this.labels[label]-1;},
         ifz: (label) => {
           if (this.stack.pop() === 0) 
-          {this.pc = this.labels[label];} },
+          {this.pc = this.labels[label]-1;} },
         ifl: (label) => {
           if (this.stack.pop() < 0) 
-          {this.pc = this.labels[label];} },
+          {this.pc = this.labels[label]-1;} },
         funcEnd: () => 
-          {this.pc = this.callStack.pop();},
+          {this.pc = this.call_stack.pop()-1;},
         end: () => 
-          {this.halt = true;}  // 控制主迴圈中止
+          {this.pc = this.instruction.length+1;}  // 控制主迴圈中止
       }
     }
     return InstDic
@@ -96,51 +105,85 @@ class Seven_charVM {
   }
 
   // 將漢字數字格式轉成實際數值
-  numberAnalysis(code) {
-    let [numStr, denomStr] = code.split("子");
+  numberAnalysis(NumberCode) {
+    let [numStr, denomStr] = NumberCode.split("子");
     let binary = numStr.replace(/甲/g, "0").replace(/乙/g, "1");
     let number = binary[0] === "0" ? -parseInt(binary, 2) : parseInt(binary, 2);
-
     if (denomStr) {
       denomStr = denomStr.slice(0, -1);
       let denomBinary = denomStr.replace(/甲/g, "0").replace(/乙/g, "1");
       let denom = denomBinary[0] === "0" ? -parseInt(denomBinary, 2) : parseInt(denomBinary, 2);
       number = number / denom;
     }
-
     return number;
   }
 
   // 將漢字指令轉換為機器可執行的形式
   translate(code) {
     const UnparamIns = {
-      "一子子": "swap", "一子丑": "drop", "一丑子": "save", "一丑丑": "get",
-      "一甲子": "printN", "一甲丑": "printC", "一乙子": "readN", "一乙丑": "readC",
-      "二甲子": "add", "二甲丑": "sub", "二乙子": "mul", "二乙丑": "div",
-      "二子子": "quot", "二子丑": "and", "二丑子": "or", "二丑丑": "not",
+      "一子子": "swap", "一子丑": "drop", "一丑子": "save",
+      "一丑丑": "get", "一甲子": "printN", "一甲丑": "printC",
+      "一乙子": "readN", "一乙丑": "readC", "二甲子": "add",
+      "二甲丑": "sub", "二乙子": "mul", "二乙丑": "div", "二子子":
+      "quot", "二子丑": "and", "二丑子": "or", "二丑丑": "not",
       "三子丑": "funcEnd", "三丑丑": "end"
     };
     const ParamIns = {
-      "三甲子": "label", "三甲丑": "jump", "三乙子": "ifz",
-      "三乙丑": "ifl", "三子子": "func", "一子": "push", "一丑": "copy"
+      "三甲子": "label", "三甲丑": "jump",
+      "三乙子": "ifz", "三乙丑": "ifl",
+      "三子子": "func", "一子": "push",
+      "一丑": "copy"
     };
-
-    const raw = this.processString(code);
     const translated = [];
+    for (let instr of code) {
+      if (UnparamIns[instr.slice(0, 3)])
+      {translated.push([UnparamIns[instr.slice(0, 3)], 0]);}
+      else if (ParamIns[instr.slice(0, 3)])
+      {translated.push([ParamIns[instr.slice(0, 3)], this.numberAnalysis(instr.slice(3))]);}
+      else if (ParamIns[instr.slice(0, 2)])
+      {translated.push([ParamIns[instr.slice(0, 2)], this.numberAnalysis(instr.slice(2))]);}
+      else
+      {throw new Error("Unknown code: " + instr);}
+    }
+    return translated;
+  }
 
-    for (let instr of raw) {
-      if (UnparamIns[instr.slice(0, 3)]) {
-        translated.push([UnparamIns[instr.slice(0, 3)]]);
-      } else if (ParamIns[instr.slice(0, 3)]) {
-        translated.push([ParamIns[instr.slice(0, 3)], this.numberAnalysis(instr.slice(3))]);
-      } else if (ParamIns[instr.slice(0, 2)]) {
-        translated.push([ParamIns[instr.slice(0, 2)], this.numberAnalysis(instr.slice(2))]);
-      } else {
-        throw new Error("Unknown code: " + instr);
+  // 載入程式碼(指令表、標籤表)
+  loadCode(instCode) {
+    // 讀入指令
+    this.instruction = instCode;
+    // 建立標籤表
+    for(let i=0;i<instCode.length;i++){
+      if(instCode[i][0]=="label")
+      {this.labels[instCode[i][1]] = i;}
+    }
+  }
+
+  // 單步執行
+  run_oneStep() {
+    if(this.pc < this.instruction.length){
+      let inst = this.instruction[this.pc];
+      if(inst[0] in this.InstDic.MemoryManipulation)
+        {this.InstDic.MemoryManipulation[inst[0]](inst[1]);}
+      if(inst[0] in this.InstDic.IOoperation)
+        {this.InstDic.IOoperation[inst[0]](inst[1]);}
+      if(inst[0] in this.InstDic.Arithmetic)
+        {this.InstDic.Arithmetic[inst[0]](inst[1]);}
+      if(inst[0] in this.InstDic.FlowControl)
+        {this.InstDic.FlowControl[inst[0]](inst[1]);}
+      this.pc+=1;
+    }
+  }
+
+  // 執行指令集主體
+  async run() {
+    while (this.pc < this.instruction.length) {
+      this.run_oneStep();
+      await Promise.resolve()
+      if (this.pause) {
+        break;
       }
     }
-
-    return translated;
   }
 
   showStack()// 輸出 stack
@@ -148,20 +191,10 @@ class Seven_charVM {
   showHeap()// 輸出 heap
   {return this.heap;}
 
-  // 單步執行
-  run_oneStap() {
-    
-    this..pc+=1;
-  }
-
-  // 執行指令集主體
-  run(code) {
-    
-  }
 }
 
-// 使用範例
-let SC = new Seven_charVM();
-SC.input = "10\n3";
-let result = SC.run("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
-console.log(result); // 應輸出：1
+let vm = new Seven_charVM();
+let code = vm.processString("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
+let inst = vm.translate(code);
+vm.loadCode(inst);
+vm.run();
