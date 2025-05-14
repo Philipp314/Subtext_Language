@@ -1,11 +1,3 @@
-function readInput(){
-  return prompt()*1;
-}
-
-function print(content){
-  console.log(content);
-}
-
 class Seven_charVM {
   constructor() {
     this.instruction=[];
@@ -192,9 +184,14 @@ class Seven_charVM {
   {return this.heap;}
 
 }
-
+/*
+function readInput()
+{return prompt()*1;}
+function print(content)
+{console.log(content);}
 let vm = new Seven_charVM();
 let code = vm.processString("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
 let inst = vm.translate(code);
 vm.loadCode(inst);
 vm.run();
+*/
