@@ -10,10 +10,10 @@ class SubtextLangVM {
     this.pause=false;
   }
 
-  // 建立指令映射dic
+  // 建立指令映射字典
   getInstDic() {
     let InstDic={
-      //指令映射 Memory 操作
+      // Memory 操作
       MemoryManipulation:{
         push: (arg) => 
           {this.stack.push(arg);},
@@ -31,14 +31,14 @@ class SubtextLangVM {
         get: () => 
           {this.stack.push(this.heap[this.stack.pop()]);}
       },
-      //指令映射 I/O 操作
+      // I/O 操作
       IOoperation:{
-        printN: () => {print(this.stack.pop());},
+        printN: () => {print(this.stack.pop())*1;},
         printC: () => {print(String.fromCharCode(this.stack.pop()));},
-         readN: () => {this.stack.push(readInput());},
+         readN: () => {this.stack.push(readInput())*1;},
          readC: () => {this.stack.push(readInput().charCodeAt(0));}
       },
-      //指令映射 數學運算
+      // 數學運算
       Arithmetic:{
         add: () => 
           {this.stack.push(this.stack.pop() + this.stack.pop());},
@@ -65,7 +65,7 @@ class SubtextLangVM {
           const l = a.toString(2).length;
           this.stack.push((1 << l) - 1 - a);}
       },
-      //指令映射 流程控制
+      // 流程控制
       FlowControl:{
         label: () => {},
         func: (label) => {
@@ -193,9 +193,10 @@ else
 
 /*
 function readInput()
-{return prompt()*1;}
+{return prompt();}
 function print(content)
 {console.log(content);}
+
 let vm = new SubtextLangVM();
 let code = vm.processString("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
 let inst = vm.translate(code);
