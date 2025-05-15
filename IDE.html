@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>線上編譯環境</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: monospace;
+      background-color: #0d1b2a;
+      color: #e0e1dd;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #1b263b;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    .top-section {
+      display: flex;
+      flex: 1;
+      padding: 10px;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .panel {
+      background-color: #1b263b;
+      border: 1px solid #415a77;
+      border-radius: 8px;
+      padding: 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    textarea, pre {
+      flex: 1;
+      background-color: #0d1b2a;
+      color: #e0e1dd;
+      border: none;
+      resize: none;
+      padding: 10px;
+      font-size: 14px;
+      outline: none;
+      overflow: auto;
+      margin: 0px;
+    }
+
+    textarea::placeholder {
+      color: #778da9;
+    }
+
+    .panel-title {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #adb5bd;
+    }
+
+    .console-section {
+      height: 30%;
+      padding: 10px;
+      padding-top: 0px;
+    }
+
+    .console-panel {
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      background-color: #1b263b;
+      border: 1px solid #415a77;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <header>線上編譯環境</header>
+
+  <div class="top-section">
+    <div class="panel">
+      <div class="panel-title"><span>編輯區</span></div>
+      <textarea id="editor" placeholder="在此撰寫程式碼..."></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span>編譯結果</span></div>
+      <pre id="output">// 編譯結果會顯示在這裡</pre>
+    </div>
+  </div>
+
+  <div class="console-section">
+    <div class="console-panel">
+      <div class="panel-title"><span>Console</span></div>
+      <pre id="console">// 程式執行輸出會顯示在這裡</pre>
+    </div>
+  </div>
+</body>
+</html>
