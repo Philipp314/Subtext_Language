@@ -184,6 +184,13 @@ class SubtextLangVM {
   {return this.heap;}
 
 }
+
+// 環境偵測並導出
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+  {module.exports = MyClass;}// 如果在 Node.js 環境下，導出物件成 module
+else 
+  {window.MyClass = MyClass;}// 如果在瀏覽器中，掛載到全域 window 物件上
+
 /*
 function readInput()
 {return prompt()*1;}
