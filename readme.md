@@ -13,7 +13,9 @@ SubtextLang explores the boundary between language, code, and concealment—invi
 
 ### Character Substitution Notice
 
-To improve the readability and formatting of this document, we use visible placeholder characters `一 (Yi), 二 (Er), 三 (San), 子 (Zi), 丑 (Chou), 甲 (Jia), 乙 (Yi)` to represent the actual characters used in SubtextLang source code. These substitutes are used solely for documentation purposes. When writing real programs, they should be replaced with their corresponding Unicode characters.
+To improve the readability and formatting of the files in this repository, we use visible placeholder characters to represent the actual Unicode symbols used in SubtextLang source code. These placeholders include: `一 (Yi), 二 (Er), 三 (San), 子 (Zi), 丑 (Chou), 甲 (Jia), 乙 (Yi)`. They are used solely for documentation and illustrative purposes.
+
+When using the language in practice, you can directly replace all visible placeholder characters in the code with their corresponding Unicode characters to conform to SubtextLang syntax.
 
 Below is the substitution table, along with suggested alternative Chinese characters that can be used for the visible version of the language:
 
@@ -22,10 +24,10 @@ Below is the substitution table, along with suggested alternative Chinese charac
 | 一          | U+180B  | 也                  | 亦, 仍, 還            |
 | 二          | U+180C  | 如                  | 像, 似                |
 | 三          | U+180D  | 是                  | 即, 乃, 為            |
-| 子          | U+180E  | 之                  | 的, 所                |
-| 丑          | U+202C  | 與                  | 和, 以及, 跟          |
-| 甲          | U+202D  | 其                  | 那個, 該              |
-| 乙          | U+202A  | 言                  | 說, 語, 講            |
+| 子          | U+180E  | 其                  | 那個, 該              |
+| 丑          | U+202C  | 言                  | 說, 語, 講            |
+| 甲          | U+202D  | 之                  | 的, 所                |
+| 乙          | U+202A  | 與                  | 和, 以及, 跟          |
 
 These substitutions help maintain both the appearance and semantic neutrality of the surrounding text while embedding valid SubtextLang code.
 
