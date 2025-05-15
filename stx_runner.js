@@ -182,7 +182,7 @@ class SubtextLangVM {
   }
 
   runCodeAuto(code) {
-    let code = this.processString(code);
+    code = this.processString(code);
     let inst = this.translate(code);
     this.loadCode(inst);
     this.run();
