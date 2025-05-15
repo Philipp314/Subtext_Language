@@ -8,6 +8,9 @@ class SubtextLangVM {
     this.pc = 0;
     this.InstDic=this.getInstDic();
     this.pause=false;
+    
+    this.inputFunc = () => {return prompt();};
+    this.printFunc = (content) => {alert(content);};
   }
 
   // 建立指令映射字典
@@ -33,10 +36,10 @@ class SubtextLangVM {
       },
       // I/O 操作
       IOoperation:{
-        printN: () => {print(this.stack.pop())*1;},
-        printC: () => {print(String.fromCharCode(this.stack.pop()));},
-         readN: () => {this.stack.push(readInput())*1;},
-         readC: () => {this.stack.push(readInput().charCodeAt(0));}
+        printN: () => {this.printFunc(this.stack.pop());},
+        printC: () => {this.printFunc(String.fromCharCode(this.stack.pop()));},
+         readN: () => {this.stack.push(this.inputFunc()*1);},
+         readC: () => {this.stack.push(this.inputFunc().charCodeAt(0));}
       },
       // 數學運算
       Arithmetic:{
@@ -178,28 +181,24 @@ class SubtextLangVM {
     }
   }
 
-  showStack()// 輸出 stack
-  {return this.stack;}
-  showHeap()// 輸出 heap
-  {return this.heap;}
-
+  runCodeAuto(code) {
+    let code = this.processString(code);
+    let inst = this.translate(code);
+    this.loadCode(inst);
+    this.run();
+  }
 }
 
 // 環境偵測並導出
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
-  {module.exports = MyClass;}// 如果在 Node.js 環境下，導出物件成 module
+  {module.exports = SubtextLangVM;}// 如果在 Node.js 環境下，導出物件成 module
 else 
-  {window.MyClass = MyClass;}// 如果在瀏覽器中，掛載到全域 window 物件上
+  {window.SubtextLangVM = SubtextLangVM;}// 如果在瀏覽器中，掛載到全域 window 物件上
 
 /*
-function readInput()
-{return prompt();}
-function print(content)
-{console.log(content);}
-
 let vm = new SubtextLangVM();
-let code = vm.processString("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
-let inst = vm.translate(code);
-vm.loadCode(inst);
-vm.run();
+
+vm.printFunc = (content) => {console.log(content);};
+
+vm.runCodeAuto("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子");
 */
