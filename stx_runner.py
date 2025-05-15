@@ -1,6 +1,6 @@
 import sys
 
-class Seven_charVM:
+class SubtextLangVM:
   def __init__(self, instructions):
     self.instructions = instructions
     self.labels = self._find_labels()
@@ -160,6 +160,6 @@ for i in codeBeforPurification:
   else:
     raise ValueError(f"Unknown code: {i}")
 
-vm = Seven_charVM(codeTranslate)
+vm = SubtextLangVM(codeTranslate)
 vm.run()
 input()
