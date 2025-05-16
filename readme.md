@@ -60,7 +60,7 @@ Examples:
 | `乙甲子`      | 2 (binary 10)                 |
 | `甲乙甲乙子`  | -5 (binary 101)               |
 | `乙乙丑`      | Load heap\[10\] (binary 1010) |
-| `甲乙甲丑`    | Load heap\[-5\] (binary 0101) |
+| `甲乙甲丑`    | Load heap\[-5\] (binary 101) |
 
 ## Instruction Set
 
