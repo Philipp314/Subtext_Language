@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>線上編譯環境</title>
+  <script src="stx_runner.js"></script>
   <style>
     body {
       margin: 0;
@@ -59,6 +60,8 @@
     }
 
     .panel-title {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 5px;
       font-weight: bold;
       color: #adb5bd;
@@ -87,7 +90,17 @@
 
   <div class="top-section">
     <div class="panel">
-      <div class="panel-title"><span>編輯區</span></div>
+      <div class="panel-title">
+        <span>編輯區</span>
+        <div class="buttonAera_code">
+          <span id="HL">{[ ] High Light}</span>
+        </div>
+        <div class="buttonAera_run">
+          <span id="R">{Run}</span>
+          <span id="S">{Step}</span>
+          <span id="P">{Pause}</span>
+        </div>
+      </div>
       <textarea id="editor" placeholder="在此撰寫程式碼..."></textarea>
     </div>
     <div class="panel">
@@ -98,9 +111,20 @@
 
   <div class="console-section">
     <div class="console-panel">
-      <div class="panel-title"><span>Console</span></div>
+      <div class="panel-title">
+        <span>Console</span>
+        <div class="buttonAera_consol">
+          <span id="P">{I/O}</span>
+          <span id="S">{Memory}</span>
+          <span id="R">{Clear}</span>
+        </div>
+      </div>
       <pre id="console">// 程式執行輸出會顯示在這裡</pre>
     </div>
   </div>
+  
+  <script>
+    
+  </script>
 </body>
 </html>
