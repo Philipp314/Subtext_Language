@@ -52,14 +52,15 @@ Examples:
 - `甲 = 0`, `乙 = 1`
 - Binary values terminated by `子`
 - Negative values start with `甲`
-- Floating numbers are expressed as fractional `<Numerator>子<Denominator>丑`
+- To dynamically fetch a number from the heap, terminate the binary with `丑` instead of `子`
 
 ### Examples
-| Code                  | Meaning                |
-| --------------------- | ---------------------- |
-| `乙甲子`              | 2 (binary 10)          |
-| `甲乙甲乙子`          | -5 (binary 101)        |
-| `乙乙甲乙子乙甲乙丑`  | 2.6 (binary 1101/101)  |
+| Code          | Meaning                       |
+| ------------- | ----------------------------- |
+| `乙甲子`      | 2 (binary 10)                 |
+| `甲乙甲乙子`  | -5 (binary 101)               |
+| `乙乙丑`      | Load heap\[10\] (binary 1010) |
+| `甲乙甲丑`    | Load heap\[-5\] (binary 0101) |
 
 ## Instruction Set
 

@@ -100,16 +100,17 @@ class SubtextLangVM {
   }
 
   // 將漢字數字格式轉成實際數值
-  numberAnalysis(NumberCode) {
-    let [numStr, denomStr] = NumberCode.split("子");
-    let binary = numStr.replace(/甲/g, "0").replace(/乙/g, "1");
-    let number = binary[0] === "0" ? -parseInt(binary, 2) : parseInt(binary, 2);
-    if (denomStr) {
-      denomStr = denomStr.slice(0, -1);
-      let denomBinary = denomStr.replace(/甲/g, "0").replace(/乙/g, "1");
-      let denom = denomBinary[0] === "0" ? -parseInt(denomBinary, 2) : parseInt(denomBinary, 2);
-      number = number / denom;
-    }
+  numberAnalysis(numberCode) {
+    let numberStr = numberCode.slice(0, -1);
+    numberStr = numberStr.replace(/甲/g, "0").replace(/乙/g, "1");
+    let number;
+    if (numberStr[0] === "0")
+    {number = -parseInt(numberStr, 2);}
+    else
+    {number = parseInt(numberStr, 2);}
+    if (numberCode[numberCode.length - 1] === "丑")
+    {number = this.heap[number];}
+
     return number;
   }
 
@@ -129,17 +130,15 @@ class SubtextLangVM {
       "三子子": "func", "一子": "push",
       "一丑": "copy"
     };
-    const translated = [];
-    for (let instr of code) {
-      if (UnparamIns[instr.slice(0, 3)])
-      {translated.push([UnparamIns[instr.slice(0, 3)], 0]);}
-      else if (ParamIns[instr.slice(0, 3)])
-      {translated.push([ParamIns[instr.slice(0, 3)], this.numberAnalysis(instr.slice(3))]);}
-      else if (ParamIns[instr.slice(0, 2)])
-      {translated.push([ParamIns[instr.slice(0, 2)], this.numberAnalysis(instr.slice(2))]);}
-      else
-      {throw new Error("Unknown code: " + instr);}
-    }
+    let translated = [];
+    if (UnparamIns[code.slice(0, 3)])
+    {translated=[UnparamIns[code.slice(0, 3)], 0];}
+    else if (ParamIns[code.slice(0, 3)])
+    {translated=[ParamIns[code.slice(0, 3)], this.numberAnalysis(code.slice(3))];}
+    else if (ParamIns[code.slice(0, 2)])
+    {translated=[ParamIns[code.slice(0, 2)], this.numberAnalysis(code.slice(2))];}
+    else
+    {throw new Error("Unknown code: " + code);}
     return translated;
   }
 
@@ -149,15 +148,17 @@ class SubtextLangVM {
     this.instruction = instCode;
     // 建立標籤表
     for(let i=0;i<instCode.length;i++){
-      if(instCode[i][0]=="label")
-      {this.labels[instCode[i][1]] = i;}
+      if(instCode[i].slice(0, 3)=="三甲子"){
+        let labelLine = this.translate(instCode[i]);
+        this.labels[labelLine[1]] = i;
+      }
     }
   }
 
   // 單步執行
   run_oneStep() {
     if(this.pc < this.instruction.length){
-      let inst = this.instruction[this.pc];
+      let inst = this.translate(this.instruction[this.pc]);
       if(inst[0] in this.InstDic.MemoryManipulation)
         {this.InstDic.MemoryManipulation[inst[0]](inst[1]);}
       if(inst[0] in this.InstDic.IOoperation)
@@ -182,9 +183,8 @@ class SubtextLangVM {
   }
 
   runCodeAuto(code) {
-    code = this.processString(code);
-    let inst = this.translate(code);
-    this.loadCode(inst);
+    let insts = this.processString(code);
+    this.loadCode(insts);
     this.run();
   }
 }
