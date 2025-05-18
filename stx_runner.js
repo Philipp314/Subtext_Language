@@ -1,12 +1,13 @@
 class SubtextLangVM {
   constructor() {
+    this.InstDic=this.getInstDic();
+    
     this.instruction=[];
     this.stack = [];
     this.heap={};
     this.labels = {};
     this.call_stack = [];
     this.pc = 0;
-    this.InstDic=this.getInstDic();
     this.pause=false;
     
     this.inputFunc = () => {return prompt();};
@@ -23,8 +24,10 @@ class SubtextLangVM {
         copy: (arg) => 
           {this.stack.push(this.stack[this.stack.length - arg]);},
         swap: () => {
-          [this.stack[this.stack.length - 1], this.stack[this.stack.length - 2]] =
-          [this.stack[this.stack.length - 2], this.stack[this.stack.length - 1]];},
+          [this.stack[this.stack.length - 1],
+           this.stack[this.stack.length - 2]] =
+          [this.stack[this.stack.length - 2],
+           this.stack[this.stack.length - 1]];},
         drop: () => 
           {this.stack.pop();},
         save: () => {
@@ -95,7 +98,9 @@ class SubtextLangVM {
   processString(inputString) {
     const allowedChars = new Set("一二三甲乙子丑");
     let filtered = [...inputString].filter(c => allowedChars.has(c)).join("");
-    filtered = filtered.replace(/一/g, " 一").replace(/二/g, " 二").replace(/三/g, " 三");
+    filtered = filtered.replace(/一/g, " 一");
+    filtered = filtered.replace(/二/g, " 二");
+    filtered = filtered.replace(/三/g, " 三");
     return filtered.trim().split(/\s+/);
   }
 
@@ -136,11 +141,15 @@ class SubtextLangVM {
     };
     let translated = [];
     if (UnparamIns[code.slice(0, 3)])
-    {translated=[UnparamIns[code.slice(0, 3)], 0];}
-    else if (ParamIns[code.slice(0, 3)])
-    {translated=[ParamIns[code.slice(0, 3)], this.numberAnalysis(code.slice(3),explain)];}
-    else if (ParamIns[code.slice(0, 2)])
-    {translated=[ParamIns[code.slice(0, 2)], this.numberAnalysis(code.slice(2),explain)];}
+    {translated=[UnparamIns[code.slice(0, 3)], ""];}
+    else if (ParamIns[code.slice(0, 3)]){
+      translated=[ParamIns[code.slice(0, 3)],
+                  this.numberAnalysis(code.slice(3),explain)];
+    }
+    else if (ParamIns[code.slice(0, 2)]){
+      translated=[ParamIns[code.slice(0, 2)],
+                  this.numberAnalysis(code.slice(2),explain)];
+    }
     else
     {throw new Error("Unknown code: " + code);}
     return translated;
@@ -199,13 +208,23 @@ class SubtextLangVM {
     {op.push(this.translate(codeList[i],true));}
     return op;
   }
+  
+  clearVM(){
+    this.instruction=[];
+    this.stack = [];
+    this.heap={};
+    this.labels = {};
+    this.call_stack = [];
+    this.pc = 0;
+    this.pause=false;
+  }
 }
 
 // 環境偵測並導出
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
   {module.exports = SubtextLangVM;}// 如果在 Node.js 環境下，導出物件成 module
-else 
-  {window.SubtextLangVM = SubtextLangVM;}// 如果在瀏覽器中，掛載到全域 window 物件上
+else // 如果在瀏覽器中，掛載到全域 window 物件上
+  {window.SubtextLangVM = SubtextLangVM;}
 
 /*
 let vm = new SubtextLangVM();
