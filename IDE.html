@@ -93,18 +93,23 @@
       <div class="panel-title">
         <span>編輯區</span>
         <div class="buttonAera_code">
-          <span id="HL">{[ ] High Light}</span>
+          <span id="H">&lt;[ ]High Light&gt;</span>
         </div>
         <div class="buttonAera_run">
-          <span id="R">{Run}</span>
-          <span id="S">{Step}</span>
-          <span id="P">{Pause}</span>
+          <span id="R">&lt;Run&gt;</span>
+          <span id="S">&lt;Step&gt;</span>
+          <span id="P">&lt;Pause&gt;</span>
         </div>
       </div>
       <textarea id="editor" placeholder="在此撰寫程式碼..."></textarea>
     </div>
     <div class="panel">
-      <div class="panel-title"><span>編譯結果</span></div>
+      <div class="panel-title">
+        <span>編譯結果</span>
+        <div class="buttonAera_panel">
+          <span id="L">&lt;Reload&gt;</span>
+        </div>
+      </div>
       <pre id="output">// 編譯結果會顯示在這裡</pre>
     </div>
   </div>
@@ -114,15 +119,67 @@
       <div class="panel-title">
         <span>Console</span>
         <div class="buttonAera_consol">
-          <span id="P">{I/O}</span>
-          <span id="S">{Memory}</span>
-          <span id="R">{Clear}</span>
+          <span id="I">&lt;I/O&gt;</span>
+          <span id="M">&lt;Memory&gt;</span>
+          <span id="C">&lt;Clear&gt;</span>
         </div>
       </div>
       <pre id="console">// 程式執行輸出會顯示在這裡</pre>
     </div>
   </div>
   
+  <script id="ButtonActionDefinition">
+    function HighLightCode(){ //未完成
+      let obj=document.getElementById("H");
+      if(obj.innerHTML[5]==" "){ //未選取
+        obj.innerHTML="&lt;[V]High Light&gt;"
+      }else{
+        obj.innerHTML="&lt;[ ]High Light&gt;"
+      }
+    }
+    
+    function RunCode(){
+      let obj=document.getElementById("R");
+    }
+    function RunOneStep(){
+      let obj=document.getElementById("S");
+    }
+    function PauseRuntime(){
+      let obj=document.getElementById("P");
+    }
+    
+    function ReloadCode(){
+      let obj=document.getElementById("L");
+    }
+    
+    function IOLabel(){
+      let obj=document.getElementById("I");
+    }
+    function MemoryLabel(){
+      let obj=document.getElementById("M");
+    }
+    function ClearConsole(){
+      let obj=document.getElementById("C");
+    }
+    
+    let func = {
+      "H": HighLightCode,
+      "R": RunCode,
+      "S": RunOneStep,
+      "P": PauseRuntime,
+      "L": ReloadCode,
+      "I": IOLabel,
+      "M": MemoryLabel,
+      "C": ClearConsole,
+    };
+    
+    for (let key in func) {
+      let button = document.getElementById(key);
+      if (button) {
+        button.onclick = func[key];
+      }
+    }
+  </script>
   <script>
     
   </script>
