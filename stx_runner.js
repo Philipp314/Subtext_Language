@@ -100,7 +100,7 @@ class SubtextLangVM {
   }
 
   // 將漢字數字格式轉成實際數值
-  numberAnalysis(numberCode) {
+  numberAnalysis(numberCode, explain) {
     let numberStr = numberCode.slice(0, -1);
     numberStr = numberStr.replace(/甲/g, "0").replace(/乙/g, "1");
     let number;
@@ -108,14 +108,18 @@ class SubtextLangVM {
     {number = -parseInt(numberStr, 2);}
     else
     {number = parseInt(numberStr, 2);}
-    if (numberCode[numberCode.length - 1] === "丑")
-    {number = this.heap[number];}
+    if (numberCode[numberCode.length - 1] === "丑"){
+      if(explain)
+      {number = `heap[${number}]`;}
+      else
+      {number = this.heap[number];}
+    }
 
     return number;
   }
 
   // 將漢字指令轉換為機器可執行的形式
-  translate(code) {
+  translate(code, explain=false) {
     const UnparamIns = {
       "一子子": "swap", "一子丑": "drop", "一丑子": "save",
       "一丑丑": "get", "一甲子": "printN", "一甲丑": "printC",
@@ -134,9 +138,9 @@ class SubtextLangVM {
     if (UnparamIns[code.slice(0, 3)])
     {translated=[UnparamIns[code.slice(0, 3)], 0];}
     else if (ParamIns[code.slice(0, 3)])
-    {translated=[ParamIns[code.slice(0, 3)], this.numberAnalysis(code.slice(3))];}
+    {translated=[ParamIns[code.slice(0, 3)], this.numberAnalysis(code.slice(3),explain)];}
     else if (ParamIns[code.slice(0, 2)])
-    {translated=[ParamIns[code.slice(0, 2)], this.numberAnalysis(code.slice(2))];}
+    {translated=[ParamIns[code.slice(0, 2)], this.numberAnalysis(code.slice(2),explain)];}
     else
     {throw new Error("Unknown code: " + code);}
     return translated;
@@ -186,6 +190,14 @@ class SubtextLangVM {
     let insts = this.processString(code);
     this.loadCode(insts);
     this.run();
+  }
+  
+  explainCode(code){
+    let codeList = this.processString(code);
+    let op=[];
+    for(let i=0;i<codeList.length;i++)
+    {op.push(this.translate(codeList[i],true));}
+    return op;
   }
 }
 
