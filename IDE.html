@@ -166,10 +166,22 @@
   <script id="global_Value">
     //顯示 placeholder(提示)
     const codeArea = document.getElementById('editor');
-    const placeholder = document.getElementById('placeholder');
-    function togglePlaceholder() {
-      if (codeArea.textContent.trim() === '') {
-        placeholder.style.opacity = '1';
+    
+    //建立《潛文》解釋器
+    let VM = new SubtextLangVM();
+    VM.printFunc = ()=>{ //重構 解釋器輸出 未完成
+      
+    };
+    VM.inputFunc = ()=>{//重構 解釋器輸入 未完成
+      
+    }
+  </script>
+  
+  <script id="UI_setting">
+    function togglePlaceholder() {//////////////////////////////////////////////改成傳入pre tag 為參數
+      let placeholder = document.getElementById('placeholder');/////////////////以CSS選擇器(或父子關係)
+      if (codeArea.textContent.trim() === '') {/////////////////////////////////選出對應placeholder
+        placeholder.style.opacity = '1';////////////////////////////////////////上面HTML結構也要改
       } else {
         placeholder.style.opacity = '0';
       }
@@ -178,13 +190,10 @@
     codeArea.addEventListener('focus', togglePlaceholder);
     codeArea.addEventListener('blur', togglePlaceholder);
     togglePlaceholder();
-    
-    //建立《潛文》解釋器
-    let VM = new SubtextLangVM();
   </script>
   
   <script id="ButtonActionDefinition">
-    function HighLightCode(){ //未完成
+    function HighLightCode(){ //完成
       let obj=document.getElementById("H");
       if(obj.innerHTML[5]==" "){ //未選取
         obj.innerHTML="&lt;[V]High Light&gt;";
@@ -204,7 +213,7 @@
       }
     }
     
-    function RunCode(){
+    function RunCode(){ //完成
       VM.clearVM();
       VM.runCodeAuto(codeArea.innerHTML);
     }
@@ -215,8 +224,25 @@
       
     }
     
-    function ReloadCode(){
-      
+    function ReloadCode(){ //完成
+      let inst = "";
+      try{
+        let code=codeArea.textContent;
+        let instList=VM.explainCode(code);
+        for(let i=0;i<instList.length;i++){
+          if(instList[i][0]!="label"){inst+="  ";}
+          if(instList[i][1]===""){
+            inst+=instList[i][0];
+            inst+=";\n"
+          }else{
+            inst+=instList[i][0];
+            inst+=" ";
+            inst+=instList[i][1];
+            inst+=";\n";
+          }
+        }
+      }catch(e){inst=e.message;}
+      document.getElementById("output").innerHTML=inst;
     }
     
     function IOLabel(){
@@ -229,6 +255,7 @@
       
     }
     
+    // 綁定事件
     let func = {
       "H": HighLightCode,
       "R": RunCode,
@@ -239,16 +266,12 @@
       "M": MemoryLabel,
       "C": ClearConsole,
     };
-    
     for (let key in func) {
       let button = document.getElementById(key);
       if (button) {
         button.onclick = func[key];
       }
     }
-  </script>
-  <script>
-    
   </script>
 </body>
 </html>
