@@ -42,7 +42,7 @@
       min-height: 0;
     }
 
-    .editable, pre:not(#editor) {
+    .ediTable, .opTable, .conTable {
       flex: 1;
       background-color: #0d1b2a;
       color: #e0e1dd;
@@ -56,7 +56,7 @@
       position: relative;
     }
 
-    #editor {
+    pre {
       width: 100%;
       height: 100%;
       margin: 0px;
@@ -80,9 +80,17 @@
     .panel-title {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 5px;
+      //margin-bottom: 5px;
       font-weight: bold;
       color: #adb5bd;
+    }
+    
+    .panel-title span{
+      padding-bottom: 5px;
+      user-select: none;
+      -webkit-user-select: none;  /* Safari */
+      -moz-user-select: none;     /* Firefox */
+      -ms-user-select: none;      /* IE10+ */
     }
 
     .console-section {
@@ -116,6 +124,18 @@
       color: #1e1e2f;
     }
   </style>
+  <style id="label_Tag">
+    .inLabel{
+      background: linear-gradient(
+        to bottom,
+        #3ABEFF 0%,
+        #0d1b2a 50%,
+        #0d1b2a 100%
+      );
+      border-radius: 5px 5px 0px 0px;
+      padding: 5px 0px;
+    }
+  </style>
 </head>
 <body>
   <header>線上編譯環境</header>
@@ -133,9 +153,9 @@
           <span id="P">&lt;Pause&gt;</span>
         </div>
       </div>
-      <div class="editable">
+      <div class="ediTable">
         <pre contenteditable="true" id="editor"></pre>
-        <div class="placeholder" id="placeholder">在此撰寫程式碼...</div>
+        <div class="placeholder">在此撰寫程式碼...</div>
       </div>
     </div>
     <div class="panel">
@@ -145,21 +165,31 @@
           <span id="L">&lt;Reload&gt;</span>
         </div>
       </div>
-      <pre id="output">// 編譯結果會顯示在這裡</pre>
+      <div class="opTable">
+        <pre id="output"></pre>
+        <div class="placeholder">// 編譯結果會顯示在這裡</div>
+      </div>
     </div>
   </div>
 
   <div class="console-section">
     <div class="console-panel">
       <div class="panel-title">
-        <span>Console</span>
-        <div class="buttonAera_consol">
+        <div class="buttonAera_label">
+          <span>Console</span>
+          <span> &nbsp; &nbsp; </span>
           <span id="I">&lt;I/O&gt;</span>
           <span id="M">&lt;Memory&gt;</span>
+        </div>
+        <span > &nbsp; </span>
+        <div class="buttonAera_consol">
           <span id="C">&lt;Clear&gt;</span>
         </div>
       </div>
-      <pre id="console">// 程式執行輸出會顯示在這裡</pre>
+      <div class="conTable">
+        <pre id="console"></pre>
+        <div class="placeholder">// 程式執行輸出會顯示在這裡</div>
+      </div>
     </div>
   </div>
   
@@ -169,8 +199,14 @@
     
     //建立《潛文》解釋器
     let VM = new SubtextLangVM();
-    VM.printFunc = ()=>{ //重構 解釋器輸出 未完成
-      
+    
+    let IOcontent="";
+    let MemoryContent=`  stack:${JSON.stringify(VM.stack)} `
+    MemoryContent+=`\n  heap:${JSON.stringify(VM.heap)}`;
+    
+    VM.printFunc = (content)=>{ //重構 解釋器輸出 未完成
+      IOcontent+=content;
+      //刷新未完成
     };
     VM.inputFunc = ()=>{//重構 解釋器輸入 未完成
       
@@ -178,18 +214,31 @@
   </script>
   
   <script id="UI_setting">
-    function togglePlaceholder() {//////////////////////////////////////////////改成傳入pre tag 為參數
-      let placeholder = document.getElementById('placeholder');/////////////////以CSS選擇器(或父子關係)
-      if (codeArea.textContent.trim() === '') {/////////////////////////////////選出對應placeholder
-        placeholder.style.opacity = '1';////////////////////////////////////////上面HTML結構也要改
+    function togglePlaceholder(obj) {
+      let placeholder = obj.parentNode.querySelector(`.placeholder`);
+      if (obj.textContent.trim() === '') {
+        placeholder.style.opacity = '1';
       } else {
         placeholder.style.opacity = '0';
       }
     }
-    codeArea.addEventListener('input', togglePlaceholder);
-    codeArea.addEventListener('focus', togglePlaceholder);
-    codeArea.addEventListener('blur', togglePlaceholder);
-    togglePlaceholder();
+    
+    function Binding(obj){
+      let observer = new MutationObserver(() => {
+        togglePlaceholder(obj);
+      });
+
+      observer.observe(obj, {
+        childList: true,      // 監聽子節點的變化
+        characterData: true,  // 監聽文字內容變化
+        subtree: true         // 遞迴監聽子節點
+      });
+      togglePlaceholder(obj);
+    }
+    
+    Binding(document.querySelector("#editor"));
+    Binding(document.querySelector("#output"));
+    Binding(document.querySelector("#console"));
   </script>
   
   <script id="ButtonActionDefinition">
@@ -245,11 +294,18 @@
       document.getElementById("output").innerHTML=inst;
     }
     
-    function IOLabel(){
-      let obj=document.getElementById("I");
+    function IOLabel(){/////////////////////////////////////////////////////////缺更新
+      let IOobj=document.getElementById("I");
+      let memoryObj=document.getElementById("M");
+      IOobj.className="inLabel";
+      memoryObj.className="";
     }
-    function MemoryLabel(){
-      let obj=document.getElementById("M");
+    function MemoryLabel(){/////////////////////////////////////////////////////缺更新
+      let IOobj=document.getElementById("I");
+      let memoryObj=document.getElementById("M");
+      memoryObj.className="inLabel";
+      IOobj.className="";
+      document.getElementById("console").innerHTML=MemoryContent;
     }
     function ClearConsole(){
       
