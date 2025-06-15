@@ -116,7 +116,7 @@ class SubtextLangVM:
             "一丑丑": "get", "一甲子": "printN", "一甲丑": "printC",
             "一乙子": "readN", "一乙丑": "readC", "二甲子": "add",
             "二甲丑": "sub", "二乙子": "mul", "二乙丑": "div",
-            "二子子": "quot", "二子丑": "and", "二丑子": "or",
+            "二子子": "root", "二子丑": "and", "二丑子": "or",
             "二丑丑": "not", "三子丑": "funcEnd", "三丑丑": "end"
         }
         param_ins = {
