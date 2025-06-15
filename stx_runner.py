@@ -35,7 +35,7 @@ class SubtextLangVM:
                 "sub": lambda _: self._sub(),
                 "mul": lambda _: self.stack.append(self.stack.pop() * self.stack.pop()),
                 "div": lambda _: self._div(),
-                "quot": lambda _: self._quot(),
+                "root": lambda _: self._root(),
                 "and": lambda _: self.stack.append(self.stack.pop() & self.stack.pop()),
                 "or": lambda _: self.stack.append(self.stack.pop() | self.stack.pop()),
                 "not": lambda _: self._bitwise_not()
@@ -64,12 +64,12 @@ class SubtextLangVM:
     def _div(self):
         b = self.stack.pop()
         a = self.stack.pop()
-        self.stack.append(a / b)
+        self.stack.append(a // b)
 
-    def _quot(self):
+    def _root(self):
         b = self.stack.pop()
         a = self.stack.pop()
-        self.stack.append(a // b)
+        self.stack.append(int(a ** (1/b)))
 
     def _bitwise_not(self):
         a = self.stack.pop()

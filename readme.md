@@ -60,7 +60,7 @@ Examples:
 | `乙甲子`      | 2 (binary 10)                 |
 | `甲乙甲乙子`  | -5 (binary 101)               |
 | `乙乙丑`      | Load heap\[10\] (binary 1010) |
-| `甲乙甲丑`    | Load heap\[-5\] (binary 101) |
+| `甲乙甲丑`    | Load heap\[-5\] (binary 101)  |
 
 ## Instruction Set
 
@@ -83,16 +83,16 @@ Examples:
 | `一 乙 丑`  | readC     | Read character    |
 
 ### Arithmetic (`二`)
-| Code        | Operation | Description       |
-| ----------- | --------- | ----------------- |
-| `二 甲 子`  | add       | Addition          |
-| `二 甲 丑`  | sub       | Subtraction       |
-| `二 乙 子`  | mul       | Multiplication    |
-| `二 乙 丑`  | div       | Integer Division  |
-| `二 子 子`  | quot      | Floor Division    |
-| `二 子 丑`  | and       | Bitwise AND       |
-| `二 丑 子`  | or        | Bitwise OR        |
-| `二 丑 丑`  | not       | Bitwise NOT       |
+| Code        | Operation | Description (stack: \[..., a, b\]) |
+| ----------- | --------- | ---------------------------------- |
+| `二 甲 子`  | add       | Compute a + b                      |
+| `二 甲 丑`  | sub       | Compute a - b                      |
+| `二 乙 子`  | mul       | Compute a \* b                     |
+| `二 乙 丑`  | div       | Compute floor of a / b             |
+| `二 子 子`  | root      | Compute floor of a^(1/b)           |
+| `二 子 丑`  | and       | Compute bitwise a AND b            |
+| `二 丑 子`  | or        | Compute bitwise a OR b             |
+| `二 丑 丑`  | not       | Compute bitwise NOT of b           |
 
 ### Flow Control (`三`)
 | Code               | Operation   | Description         |
