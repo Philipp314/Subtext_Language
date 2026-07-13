@@ -1,0 +1,31 @@
+  一乙子              readN;
+  一子 甲乙子         push -1;
+  一子子              swap;
+  一丑子              save;
+  一子 甲子           push 0;
+  一子 乙子           push 1;
+                    
+三甲子 乙子         label 1;
+  一子 甲乙子         push -1;
+  一丑丑              get;
+  一子 乙子           push 1;
+  二甲丑              sub;
+  一丑 乙子           copy 1;
+  三乙子 乙甲子       ifz 2;
+  一子 甲乙子         push -1;
+  一子子              swap;
+  一丑子              save;
+                    
+  一丑 乙子           copy 1;
+  一子 甲子           push 0;
+  一子子              swap;
+  一丑子              save;
+  二甲子              add;
+  一子 甲子           push 0;
+  一丑丑              get;
+  一子子              swap;
+  三甲丑 乙子         jump 1;
+                    
+三甲子 乙甲子       label 2;
+  一子丑              drop;
+  一甲子              printN;

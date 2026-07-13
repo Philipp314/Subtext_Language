@@ -163,11 +163,15 @@ class SubtextLangVM:
 
 
 if __name__ == "__main__":
-  with open(sys.argv[1],"r",encoding="utf8") as f:
-    code=f.read()
-  vm=SubtextLangVM()
-  vm.run_code_auto(code)
-  input()
+  try:
+    with open(sys.argv[1],"r",encoding="utf8") as f:
+      code=f.read()
+    vm=SubtextLangVM()
+    vm.run_code_auto(code)
+    input()
+  except Exception as e:
+    print(e)
+    input()
   '''
   vm=SubtextLangVM()
   vm.run_code_auto("一乙子一乙子一丑乙甲子一丑乙甲子二子子二乙子二甲丑一甲子")
