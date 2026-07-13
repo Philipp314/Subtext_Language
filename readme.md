@@ -123,7 +123,7 @@ Take the remainder of the first two items in the stack
 三 甲 子 乙子     # function star      >>[7,3]
   一 丑 乙甲子    # Duplicate 2nd itn  >>[7,3,7]
   一 丑 乙甲子    # Duplicate 2nd itn  >>[7,3,7,3]
-  二 子 子        # Floor Division     >>[7,3,2]
+  二 子 丑        # Floor Division     >>[7,3,2]
   二 乙 子        # Multiplication     >>[7,6]
   二 甲 丑        # Subtraction        >>[1]
 三 子 丑          # Function End       >>[1]
