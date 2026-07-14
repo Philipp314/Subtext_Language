@@ -161,7 +161,7 @@ function updateDebuggerUI() {
     labelKeys.forEach(key => {
       const span = document.createElement("span");
       span.className = "label-tag";
-      span.innerText = `L${key} ➔ Line ${vm.labels[key]}`;
+      span.innerText = `${key} ➔ [${vm.labels[key]}]`;
       labelCon.appendChild(span);
     });
   }

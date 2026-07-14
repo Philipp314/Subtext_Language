@@ -420,7 +420,7 @@ tr:nth-child(even) {
 .panels-bottom-row {
   display: grid;
   /* 比例配置：Data Stack(1.1fr) : Memory Heap(1.2fr) : Label Map(0.9fr) 可依喜好微調 */
-  grid-template-columns: 1.1fr 1.2fr 0.9fr;
+  grid-template-columns: 3fr 4fr 3fr;
   gap: 15px;
   overflow: hidden; /* 防止溢出外容器 */
   height: 100%;
