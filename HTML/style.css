@@ -80,21 +80,6 @@ main {
   overflow: hidden;
 }
 
-/* 下方狀態格專用 */
-.status-subgrid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 15px;
-  overflow: hidden;
-}
-
-.memory-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
-}
-
 /* 容器基底樣式 */
 .card {
   background-color: var(--card-bg);
@@ -284,14 +269,6 @@ textarea {
 .console-line.output { color: #10b981; }
 .console-line.error { color: var(--danger); }
 
-/* 偵錯監控面板數據 */
-.status-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  padding: 8px;
-}
-
 .status-block {
   background-color: #0d1527;
   border: 1px solid var(--border-color);
@@ -364,4 +341,93 @@ tr:nth-child(even) {
   border-radius: 4px;
   margin: 2px;
   font-size: 0.75rem;
+}
+
+/* ==========================================
+   右側面板與新版元件配置
+   ========================================== */
+
+/* 右側面板外容器 (上 7.5 : 下 2.5) */
+#panelR {
+  display: grid;
+  grid-template-rows: 7.5fr 2.5fr;
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* 上半部卡片：內部再切分為「暫存器橫排」與「下方三欄」 */
+/* 為了在 grid 7.5fr 中完美分配，我們讓上半部容器自適應撐滿 */
+#panelR > .card:first-child, /* 兼容舊結構 */
+#panelR > .registers-bar {
+  grid-row: 1; /* 指明在第一個網格中 */
+}
+
+/* 為了達成「暫存器最上 + 三欄在下」並塞在同一個 7.5fr 區間中，
+   我們直接將 #panelR 的結構調整，讓控制台留在 grid 2.5fr，
+   上方所有的區塊透過 flex 或另一個 sub-grid 來完美配比。 */
+
+#panelR {
+  display: grid;
+  /* 上方區域：自動分配暫存器與三欄，下方控制台佔用 2.5份 */
+  grid-template-rows: 1.5fr 6fr 2.5fr; 
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* 1. Core Registers 橫排樣式 */
+.registers-bar {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.status-grid-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.status-grid-horizontal .status-block {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #0d1527;
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.status-grid-horizontal .status-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.status-grid-horizontal .status-val {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+
+/* 2. 下方三欄左右排列區 */
+.panels-bottom-row {
+  display: grid;
+  /* 比例配置：Data Stack(1.1fr) : Memory Heap(1.2fr) : Label Map(0.9fr) 可依喜好微調 */
+  grid-template-columns: 1.1fr 1.2fr 0.9fr;
+  gap: 15px;
+  overflow: hidden; /* 防止溢出外容器 */
+  height: 100%;
+}
+
+/* 微調三欄各自卡片的內部高度 */
+.data-stack-card, .memory-heap-card, .labels-card {
+  height: 100%;
+  min-height: 0; /* 防止 flex/grid 子項溢出的極致關鍵 */
 }

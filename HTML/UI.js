@@ -132,7 +132,7 @@ function updateDebuggerUI() {
     for(let i = vm.stack.length - 1; i >= 0; i--) {
       const div = document.createElement("div");
       div.className = `stack-item ${i === vm.stack.length - 1 ? 'top' : ''}`;
-      div.innerHTML = `<span>Stack Unit  [${i}]</span> <span>${vm.stack[i]}</span>`;
+      div.innerHTML = `<span>[${i}]</span> <span>${vm.stack[i]}</span>`;
       stackCon.appendChild(div);
     }
   }

@@ -48,40 +48,43 @@
     </div>
 
     <div id="panelR">
+      <div class="card registers-bar">
+        <div class="status-grid-horizontal">
+          <div class="status-block"><span class="status-label">PC:</span> <span class="status-val" id="val-pc">0</span></div>
+          <div class="status-block"><span class="status-label">Stack Depth:</span> <span class="status-val" id="val-stack-size">0</span></div>
+          <div class="status-block"><span class="status-label">Call Stack Depth:</span> <span class="status-val" id="val-callstack-size">0</span></div>
+          <div class="status-block"><span class="status-label">Heap Size:</span> <span class="status-val" id="val-heap-size">0</span></div>
+        </div>
+      </div>
 
-      <div class="status-subgrid">
-        <div class="card" style="overflow: hidden;">
-          <div class="card-header">Core Registers & Data Stack</div>
-          <div class="status-grid">
-            <div class="status-block"><div class="status-label">PC Pointer</div><div class="status-val" id="val-pc">0</div></div>
-            <div class="status-block"><div class="status-label">Stack Depth</div><div class="status-val" id="val-stack-size">0</div></div>
-            <div class="status-block"><div class="status-label">Call Stack Depth</div><div class="status-val" id="val-callstack-size">0</div></div>
-            <div class="status-block"><div class="status-label">Heap Size</div><div class="status-val" id="val-heap-size">0</div></div>
-          </div>
-          <div class="list-container" id="stackContainer" style="border-top: 1px solid var(--border-color); background-color: #070c16;">
+      <div class="panels-bottom-row">
+        
+        <div class="card data-stack-card">
+          <div class="card-header">Data Stack</div>
+          <div class="list-container" id="stackContainer" style="background-color: #070c16;">
             <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center;">(Stack Empty)</div>
           </div>
         </div>
 
-        <div class="memory-columns">
-          <div class="card" style="flex: 1;">
-            <div class="card-header">Memory Heap</div>
-            <div class="list-container">
-              <table>
-                <thead><tr><th>Address</th><th>Value</th></tr></thead>
-                <tbody id="heapTableBody">
-                  <tr><td colspan="2" style="color: var(--text-muted); text-align: center;">(Heap Empty)</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card" style="height: 100px;">
-            <div class="card-header">Label Map (Labels)</div>
-            <div class="list-container" id="labelsContainer" style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px;">
-              <span style="color: var(--text-muted); font-size: 0.8rem;">No Labels</span>
-            </div>
+        <div class="card memory-heap-card">
+          <div class="card-header">Memory Heap</div>
+          <div class="list-container">
+            <table>
+              <thead><tr><th>Address</th><th>Value</th></tr></thead>
+              <tbody id="heapTableBody">
+                <tr><td colspan="2" style="color: var(--text-muted); text-align: center;">(Heap Empty)</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
+
+        <div class="card labels-card">
+          <div class="card-header">Labels</div>
+          <div class="list-container" id="labelsContainer" style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px;">
+            <span style="color: var(--text-muted); font-size: 0.8rem;">No Labels</span>
+          </div>
+        </div>
+
       </div>
 
       <div class="card console-container">
@@ -90,15 +93,14 @@
           <button class="tab-btn" onclick="switchTab('io-log')">I/O Text Terminal</button>
           <button onclick="clearCurrentTab()" style="margin-left: auto; background: none; border: none; color: var(--text-muted); font-size: 0.75rem; padding-right: 15px;">Clear Current Tab</button>
         </div>
-        
         <div class="tab-content active" id="system-log">
-          <div class="console-line system">> VM is ready. Please enter code and click Compile or Run.</div>
+          <div class="console-line system">> Virtual machine is ready. Please enter instructions and click Compile or Run.</div>
         </div>
-        
         <div class="tab-content" id="io-log"></div>
       </div>
 
     </div>
+
   </main>
 
   <script src="./UI.js"></script>
