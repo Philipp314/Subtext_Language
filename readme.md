@@ -141,3 +141,5 @@ To accommodate the different variants and representations of **SubtextLang**, th
     
 *   **`.cstx` (Semantic Camouflage Version)**  
     Contains the natural language camouflage variant. It uses innocuous everyday characters (such as `也`, `如`, `是`, `其`, `言`, `之`, `與`) to weave the functional code directly into seemingly ordinary prose, masking both its existence and intent.
+
+Note: Both variants (Invisible Subtext and Semantic Camouflage) can coexist simultaneously within the same file. For example, as demonstrated in `./BistabilityExample`, a single document can be interpreted in two completely different ways at the same time, yielding entirely distinct execution results depending on which parsing layer is targeted.
