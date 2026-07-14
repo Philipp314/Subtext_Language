@@ -94,6 +94,30 @@ class SubtextLangVM {
     return InstDic
   }
 
+  // 處理 Invisible Subtext (隱形子文本)
+  processIS(inputString) {
+    const isMap = {
+      "\u180B": "一","\u180C": "二","\u180D": "三","\u180E": "子","\u202C": "丑",
+      "\u202A": "甲","\u202B": "甲","\u202D": "乙","\u202E": "乙"};
+    // 將隱形字元轉換為對應的 placeholder 漢字
+    let decoded = [...inputString]
+      .map(char => isMap[char] || "") // 非目標字元直接過濾掉
+      .join("");
+    // 利用原本的 processString 進行標準化與斷詞
+    return this.processString(decoded);
+  }
+  // 處理 Semantic Camouflage (語義偽裝)
+  processSC(inputString) {
+    const scMap = 
+      {"也": "一","如": "二","是": "三","其": "子","言": "丑","之": "甲","與": "乙"};
+    // 將偽裝漢字轉換為對應的 placeholder 漢字
+    let decoded = [...inputString]
+      .map(char => scMap[char] || "") // 移除非偽裝字的其餘雜訊字元
+      .join("");
+    // 利用原本的 processString 進行標準化與斷詞
+    return this.processString(decoded);
+  }
+
   // 處理輸入字串，過濾合法字符與斷詞
   processString(inputString) {
     const allowedChars = new Set("一二三甲乙子丑");

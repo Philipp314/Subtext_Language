@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SubtextLang VM Professional Debugger & Compiler</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="./stx_runner.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>SubtextLang <span class="subtitle">VM Integrated Debugging Compiler</span></h1>
+    </div>
+    <div class="btn-group">
+      <button class="btn-success" onclick="startRun()"><span style="color:#10b981">▶▶</span> Run</button>
+      <button class="btn-success" onclick="autoStep()"><span style="color:#10b981">▶</span> Auto Step</button>
+      <button onclick="pauseRun()">|| Pause</button>
+      <button onclick="stepRun()" style="border-color: var(--accent); color: var(--accent);">▶| Single Step</button>
+      <button class="btn-danger" onclick="resetVM()">Reset</button>
+    </div>
+  </header>
+  <main>
+    <div id="panelL">
+      
+      <div class="card editor-container">
+        <div class="card-header">
+          <span>Source Code Editor</span>
+          <div class="btn-group">
+            <button onclick="compileCode(null)">PLH Parsing</button>
+            <button onclick="compileCode('IS')">IS Parsing</button>
+            <button onclick="compileCode('SC')">SC Parsing</button>
+          </div>
+        </div>
+        <textarea id="codeInput" placeholder="Please enter your code here..."></textarea>
+      </div>
+
+      <div class="card instruction-flow-container">
+        <div class="card-header">
+          <span>Compiled Instruction Stream (Instruction Registry)</span>
+          <span id="pc-status" style="color: var(--warning); font-weight: bold;">PC: 0</span>
+        </div>
+        <div class="instruction-flow" id="instructionFlow">
+          <div style="color: var(--text-muted); padding: 10px;">No code compiled yet.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="panelR">
+
+      <div class="status-subgrid">
+        <div class="card" style="overflow: hidden;">
+          <div class="card-header">Core Registers & Data Stack</div>
+          <div class="status-grid">
+            <div class="status-block"><div class="status-label">PC Pointer</div><div class="status-val" id="val-pc">0</div></div>
+            <div class="status-block"><div class="status-label">Stack Depth</div><div class="status-val" id="val-stack-size">0</div></div>
+            <div class="status-block"><div class="status-label">Call Stack Depth</div><div class="status-val" id="val-callstack-size">0</div></div>
+            <div class="status-block"><div class="status-label">Heap Size</div><div class="status-val" id="val-heap-size">0</div></div>
+          </div>
+          <div class="list-container" id="stackContainer" style="border-top: 1px solid var(--border-color); background-color: #070c16;">
+            <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center;">(Stack Empty)</div>
+          </div>
+        </div>
+
+        <div class="memory-columns">
+          <div class="card" style="flex: 1;">
+            <div class="card-header">Memory Heap</div>
+            <div class="list-container">
+              <table>
+                <thead><tr><th>Address</th><th>Value</th></tr></thead>
+                <tbody id="heapTableBody">
+                  <tr><td colspan="2" style="color: var(--text-muted); text-align: center;">(Heap Empty)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card" style="height: 100px;">
+            <div class="card-header">Label Map (Labels)</div>
+            <div class="list-container" id="labelsContainer" style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px;">
+              <span style="color: var(--text-muted); font-size: 0.8rem;">No Labels</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card console-container">
+        <div class="tabs-header">
+          <button class="tab-btn active" onclick="switchTab('system-log')">Debug Log (System & Output)</button>
+          <button class="tab-btn" onclick="switchTab('io-log')">I/O Text Terminal</button>
+          <button onclick="clearCurrentTab()" style="margin-left: auto; background: none; border: none; color: var(--text-muted); font-size: 0.75rem; padding-right: 15px;">Clear Current Tab</button>
+        </div>
+        
+        <div class="tab-content active" id="system-log">
+          <div class="console-line system">> VM is ready. Please enter code and click Compile or Run.</div>
+        </div>
+        
+        <div class="tab-content" id="io-log"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="./UI.js"></script>
+</body>
+</html>

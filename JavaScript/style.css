@@ -1,0 +1,367 @@
+:root {
+  --bg-color: #0a0f1d;
+  --card-bg: #111a2e;
+  --border-color: #1e2d4a;
+  --text-main: #e2e8f0;
+  --text-muted: #64748b;
+  --primary: #3b82f6;
+  --primary-glow: rgba(59, 130, 246, 0.3);
+  --accent: #00f0ff;
+  --accent-glow: rgba(0, 240, 255, 0.2);
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', 'Courier New', Consolas, 'PingFang TC', monospace;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 頂部導覽列 */
+header {
+  background: linear-gradient(90deg, #0d1527 0%, #15223c 100%);
+  padding: 15px 25px;
+  border-bottom: 2px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: 10px;
+}
+
+/* 主配置區塊：左右雙欄 (已調整為左 6.5 : 右 3.5) */
+main {
+  display: grid;
+  grid-template-columns: 6.5fr 3.5fr;
+  flex: 1;
+  overflow: hidden;
+  padding: 15px;
+  gap: 15px;
+}
+
+/* 左側面板 */
+#panelL {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* 右側面板 (已改用 Grid 並調整為上 7.5 : 下 2.5) */
+#panelR {
+  display: grid;
+  grid-template-rows: 7.5fr 2.5fr;
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* 下方狀態格專用 */
+.status-subgrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 15px;
+  overflow: hidden;
+}
+
+.memory-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+/* 容器基底樣式 */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: rgba(25, 41, 74, 0.5);
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 15px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 工具列按鈕 */
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  background-color: #1e293b;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+button:hover {
+  background-color: var(--primary);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+button.btn-success:hover {
+  background-color: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+button.btn-danger:hover {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+/* 編輯器輸入區 */
+.editor-container {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 100%;
+  flex: 1;
+  background-color: #070c16;
+  color: #93c5fd;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+}
+
+/* 指令解譯列表 */
+.instruction-flow-container {
+  flex: 1.2; 
+}
+
+.instruction-flow {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #070c16;
+  padding: 10px;
+}
+
+.inst-line {
+  display: flex;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  font-size: 0.85rem;
+  border-left: 3px solid transparent;
+}
+
+.inst-line.active {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-left-color: var(--accent);
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.inst-num {
+  width: 40px;
+  color: var(--text-muted);
+}
+
+.inst-raw {
+  width: 150px;
+  color: #38bdf8;
+}
+
+.inst-parsed {
+  color: #a7f3d0;
+}
+
+/* 控制台與分頁切換區 */
+.console-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 確保在 Grid 架構下撐滿區塊 */
+}
+
+.tabs-header {
+  display: flex;
+  background-color: #0d1527;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.tab-btn:hover {
+  background-color: rgba(25, 41, 74, 0.3);
+  color: var(--text-main);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background-color: var(--card-bg);
+}
+
+.tab-content {
+  flex: 1;
+  background-color: #030712;
+  padding: 10px 15px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* 終端機純文字模式樣式 */
+#io-log {
+  white-space: pre-wrap; /* 保持空格與手動換行 */
+  word-break: break-all;
+  color: #10b981;
+}
+
+.console-line {
+  margin-bottom: 4px;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.console-line.system { color: #38bdf8; }
+.console-line.output { color: #10b981; }
+.console-line.error { color: var(--danger); }
+
+/* 偵錯監控面板數據 */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  padding: 8px;
+}
+
+.status-block {
+  background-color: #0d1527;
+  border: 1px solid var(--border-color);
+  padding: 6px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.status-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.status-val {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* 堆疊與堆積顯示區 */
+.list-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.stack-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #1a263e;
+  margin-bottom: 4px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.stack-item.top {
+  border: 1px solid var(--accent);
+  background-color: rgba(0, 240, 255, 0.1);
+}
+
+/* 堆積 Table 樣式 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 6px;
+  text-align: left;
+}
+
+th {
+  background-color: #15223c;
+  color: var(--accent);
+}
+
+tr:nth-child(even) {
+  background-color: #0e172a;
+}
+
+.label-tag {
+  display: inline-block;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 0.75rem;
+}
