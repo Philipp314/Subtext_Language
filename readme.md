@@ -55,6 +55,7 @@ Examples:
 - To dynamically fetch a number from the heap, terminate the binary with `丑` instead of `子`
 
 ### Examples
+
 | Code          | Meaning                       |
 | ------------- | ----------------------------- |
 | `乙甲子`      | 2 (binary 10)                 |
@@ -65,6 +66,7 @@ Examples:
 ## Instruction Set
 
 ### Memory Manipulation (`一 <Type A>`)
+
 | Code        | Operation   | Description            |
 | ----------- | ----------- | ---------------------- |
 | `一 子[n]`  | push VALUE  | Push number to stack   |
@@ -75,6 +77,7 @@ Examples:
 | `一 丑 丑`  | get         | Reading from the heap  |
 
 ### I/O Operations (`一 <Type B>`)
+
 | Code        | Operation | Description       |
 | ----------- | --------- | ----------------- |
 | `一 甲 子`  | printN    | Output number     |
@@ -83,6 +86,7 @@ Examples:
 | `一 乙 丑`  | readC     | Read character    |
 
 ### Arithmetic (`二`)
+
 | Code        | Operation | Description (stack: \[..., a, b\]) |
 | ----------- | --------- | ---------------------------------- |
 | `二 甲 子`  | add       | Compute a + b                      |
@@ -95,6 +99,7 @@ Examples:
 | `二 丑 丑`  | not       | Compute bitwise NOT of b           |
 
 ### Flow Control (`三`)
+
 | Code               | Operation   | Description         |
 | ------------------ | ----------- | ------------------- |
 | `三 甲 子[label]`  | label LABEL | Define a label      |
