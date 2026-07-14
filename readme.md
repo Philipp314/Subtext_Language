@@ -128,3 +128,16 @@ Take the remainder of the first two items in the stack
   二 甲 丑        # Subtraction        >>[1]
 三 子 丑          # Function End       >>[1]
 ```
+
+## File Extensions Explained
+
+To accommodate the different variants and representations of **SubtextLang**, the files in this repository use the following specific extensions:
+
+*   **`.stx` (Standard / Placeholder Version)**  
+    Contains source code written using the visible placeholder characters (`一`, `二`, `三`, `子`, `丑`, `甲`, `乙`). This format is human-readable and ideal for development, debugging, and documenting program logic.
+    
+*   **`.istx` (Invisible Subtext Version)**  
+    Contains the stealth variant of the language utilizing zero-width and control characters (such as `U+180B`, `U+202D`, etc.). The code in these files is practically invisible under standard text editors and seamlessly hides within whitespace or ordinary text.
+    
+*   **`.cstx` (Semantic Camouflage Version)**  
+    Contains the natural language camouflage variant. It uses innocuous everyday characters (such as `也`, `如`, `是`, `其`, `言`, `之`, `與`) to weave the functional code directly into seemingly ordinary prose, masking both its existence and intent.
