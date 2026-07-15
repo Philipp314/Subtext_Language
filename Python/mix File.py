@@ -45,9 +45,9 @@ def merge_files_randomly(file1_path, file2_path, output_path):
 
 # --- 使用範例 ---
 # 請替換成你的檔案路徑
-file_a = 'C:/Users/USER/Documents/GitHub/Subtext_Language/example/Fibonacci sequence.cstx'
-file_b = 'C:/Users/USER/Documents/GitHub/Subtext_Language/example/hello.istx'
-output_file = 'C:/Users/USER/Documents/GitHub/Subtext_Language/example/fs(c)+hello(i).stx'
+file_a = '../example/Fibonacci sequence.cstx'
+file_b = '../example/hello.istx'
+output_file = '../BistabilityExample'
 
 # 執行函式
 merge_files_randomly(file_a, file_b, output_file)
