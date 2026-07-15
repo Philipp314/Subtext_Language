@@ -52,7 +52,7 @@
 三 甲 子 甲乙子             tag -1;#end
   三 丑 丑                      end All;
 
-三 甲 子 甲子     # function star           >>[7,3]
+三 甲 子 甲子     # function start          >>[7,3]
   一 丑 乙甲子    # Duplicate 2nd itn       >>[7,3,7]
   一 丑 乙甲子    # Duplicate 2nd itn       >>[7,3,7,3]
   二 乙 丑        # Floor Division          >>[7,3,2]
