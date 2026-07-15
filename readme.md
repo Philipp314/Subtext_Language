@@ -19,15 +19,15 @@ When using the language in practice, you can directly replace all visible placeh
 
 Below is the substitution table, along with suggested alternative Chinese characters that can be used for the visible version of the language:
 
-| Placeholder | Unicode          | Suggested Character | Substitutions Options |
-| ----------- | ---------------- | ------------------- | --------------------- |
-| 一          | U+180B           | 也                  | 亦, 仍, 還            |
-| 二          | U+180C           | 如                  | 像, 似                |
-| 三          | U+180D           | 是                  | 即, 乃, 為            |
-| 子          | U+180E           | 其                  | 那個, 該              |
-| 丑          | U+202C           | 言                  | 說, 語, 講            |
-| 甲          | U+202A / U+202B  | 之                  | 的, 所                |
-| 乙          | U+202D / U+202E  | 與                  | 和, 以及, 跟          |
+| Placeholder | Invisible Subtext | Semantic Camouflage | Substitutions Options |
+| ----------- | ----------------- | ------------------- | --------------------- |
+| 一          | U+180B            | 也                  | 亦, 仍, 還            |
+| 二          | U+180C            | 如                  | 像, 似                |
+| 三          | U+180D            | 是                  | 即, 乃, 為            |
+| 子          | U+180E            | 其                  | 那個, 該              |
+| 丑          | U+202C            | 言                  | 說, 語, 講            |
+| 甲          | U+202A / U+202B   | 之                  | 的, 所                |
+| 乙          | U+202D / U+202E   | 與                  | 和, 以及, 跟          |
 
 These substitutions help maintain both the appearance and semantic neutrality of the surrounding text while embedding valid SubtextLang code.
 
