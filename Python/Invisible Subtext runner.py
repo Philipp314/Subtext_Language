@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     raise
 file_path = sys.argv[1]
 # 定義目標保留的字元
-targets = {'\u180B', '\u180C', '\u180D', '\u180E', '\u202C', '\u202A', '\u202D'}
+targets = {'\u180B', '\u180C', '\u180D', '\u180E', '\u202C', '\u202A', '\u202B', '\u202C', '\u202D'}
 # 定義取代對照表
 replace_map = {
     '\u180B': '一',
@@ -17,7 +17,9 @@ replace_map = {
     '\u180E': '子',
     '\u202C': '丑',
     '\u202A': '甲',
-    '\u202D': '乙'
+    '\u202B': '甲',
+    '\u202D': '乙',
+    '\u202C': '乙'
 }
 try:
     with open(file_path, 'r', encoding='utf-8') as f:
